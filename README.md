@@ -1,7 +1,3 @@
-Here's the updated `README.md` with the **Requirements** section formatted as a table and the **Table of Contents** adjusted accordingly:
-
----
-
 # OCP Planning
 
 ## 📋 Table of Contents
