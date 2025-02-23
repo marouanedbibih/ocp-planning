@@ -27,10 +27,10 @@ export function ProfileMenu() {
   const router = useRouter();
 
   const onSignOut = () => {
+    closeMenu();
+    router.push("/");
     removeRoleFromLocalStorage();
     removeTokenFromLocalStorage();
-    closeMenu();
-    router.push("/login");
   };
 
   const onEditProfile = () => {
@@ -75,25 +75,6 @@ export function ProfileMenu() {
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
       >
-        <MenuItem
-          onClick={onEditProfile}
-          className="flex items-center gap-2 rounded hover:bg-blue-gray-100 focus:bg-blue-gray-100"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          <Cog6ToothIcon className="h-4 w-4" strokeWidth={2} />
-          <Typography
-            as="span"
-            variant="small"
-            className="font-normal"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            Edit Profile
-          </Typography>
-        </MenuItem>
         <MenuItem
           onClick={onSignOut}
           className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10"

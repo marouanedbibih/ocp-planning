@@ -37,3 +37,16 @@ export const deleteAllSchedulesAPI = async (employeeId: number): Promise<MyRespo
         throw error.response.data;
     }
 }
+
+
+// Get all schedules owned by the current user
+export const fetchMySchedulesAPI = async (): Promise<MyResponse> => {
+    try {
+        const { data } = await axiosClient.get(`/api/v1/employee/schedules`);
+        console.log("My Schedules data: ", data);
+        return data;
+    } catch (error: any) {
+        console.log("Error fetching my schedules: ", error.response.data);
+        throw error.response.data;
+    }
+}

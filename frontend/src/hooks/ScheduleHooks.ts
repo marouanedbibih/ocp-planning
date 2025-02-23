@@ -1,6 +1,6 @@
 import { useScheduleContext } from "@/contexts/ScheduleProvider";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
-import { createScheduleAPI, deleteAllSchedulesAPI, fetchEmployeeSchedulesAPI } from "@/services/ScheduleService";
+import { createScheduleAPI, deleteAllSchedulesAPI, fetchEmployeeSchedulesAPI, fetchMySchedulesAPI } from "@/services/ScheduleService";
 import { MessageType, MyErrorResponse, MyResponse } from "@/types";
 import { IScheduleRequest } from "@/types/schedule";
 
@@ -98,3 +98,27 @@ export const useReFetchEmployeeSchedules = () => {
     return { reFetchEmployeeSchedules };
 }
 
+
+// Get all schedules owned by the current user
+export const useFetchMySchedules = () => {
+    const { setAlertOpen, setMessage } = useGlobalContext();
+    const { setLoading, loading } = useGlobalContext();
+    const { setData, data } = useScheduleContext();
+
+    const fetchMySchedules = async () => {
+        setLoading({ ...loading, table: true });
+        fetchMySchedulesAPI()
+            .then((res: MyResponse) => {
+                setData(res.data);
+            })
+            .catch((err: MyErrorResponse) => {
+                setMessage({ message: err.message, type: MessageType.ERROR });
+                setAlertOpen(true);
+            })
+            .finally(() => {
+                setLoading({ ...loading, table: false });
+            });
+    };
+
+    return { fetchMySchedules, data };
+}

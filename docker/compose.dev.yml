@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.backend
+    container_name: ocp-planning-backend
+    restart: always
+    environment:
+      SPRING_DATASOURCE_HOST: ocp-planning-mysql
+      SPRING_DATASOURCE_PORT: 3306
+      SPRING_DATASOURCE_DB: ocp_planning_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      CORS_ALLOWED_ORIGINS: http://localhost:3000
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+    networks:
+      - ocp-planning-network
+
+  frontend:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8082
+    container_name: ocp-planning-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - ocp-planning-network

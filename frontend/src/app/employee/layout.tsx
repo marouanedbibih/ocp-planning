@@ -31,10 +31,10 @@ export default function EmployeeLayout({
 
     // Check if the user is authorized
     const isAuthorized =
-      fetchedToken && (fetchedRole === "ADMIN" || fetchedRole === "MANAGER");
+    fetchedToken && (fetchedRole === "ADMIN" || fetchedRole === "SECRETARY");
 
     if (!isAuthorized) {
-      router.push("/login"); // Redirect to login page or another appropriate page
+      router.push("/"); // Redirect to login page or another appropriate page
     } else {
       setLoading(false); // Stop loading once the authorization check is complete
     }

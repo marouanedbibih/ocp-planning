@@ -1,7 +1,9 @@
 import axios, { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const axiosClient = axios.create({
-  baseURL: `http://localhost:8082`
+  baseURL: `${apiUrl}`,
 });
 
 

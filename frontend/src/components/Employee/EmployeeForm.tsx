@@ -99,6 +99,14 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = () => {
     fetchDepartementsForSelect();
   }, []);
 
+  // Get the depatement id form the local storage
+  const { getDepartementIDFromLocalStorage } = useGlobalContext();
+  const departementID = getDepartementIDFromLocalStorage();
+
+  // Get Role from local storage
+  const { getRoleFromLocalStorage } = useGlobalContext();
+  const role = getRoleFromLocalStorage();
+
   return (
     <>
       <Dialog
@@ -209,41 +217,45 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = () => {
                   onChange={(e) => handleChange("job", e.target.value)}
                 />
                 {/* Departement */}
-                <DefaultSelect
-                  label="Employee Departement"
-                  value={request.departementId.toString()}
-                  onChange={(val) => handleChange("departementId", val)}
-                  options={departements}
-                  loading={false}
-                  error={getError("departement_id")}
-                  smallMessage="Select the Employee departement"
-                  className="w-full"
-                  menuClassName="w-full"
-                />
-                <div className="flex flex-1 justify-start items-center gap-4">
-                  <Checkbox
-                    id="isSecretaryCheckbox"
-                    ripple={false}
-                    className="hover:before:opacity-0"
-                    containerProps={{
-                      className: "p-0",
-                    }}
-                    checked={request.isSecretary}
-                    onChange={handleCheckboxChange}
-                    onPointerEnterCapture={undefined}
-                    onPointerLeaveCapture={undefined}
-                    crossOrigin={undefined} // other props as needed
+                {role === "ADMIN" && (
+                  <DefaultSelect
+                    label="Employee Departement"
+                    value={request.departementId.toString()}
+                    onChange={(val) => handleChange("departementId", val)}
+                    options={departements}
+                    loading={false}
+                    error={getError("departement_id")}
+                    smallMessage="Select the Employee departement"
+                    className="w-full"
+                    menuClassName="w-full"
                   />
-                  <Typography
-                    color="blue-gray"
-                    className="font-medium"
-                    placeholder={undefined}
-                    onPointerEnterCapture={undefined}
-                    onPointerLeaveCapture={undefined}
-                  >
-                    Is Secretary
-                  </Typography>
-                </div>
+                )}
+                {role === "ADMIN" && (
+                  <div className="flex flex-1 justify-start items-center gap-4">
+                    <Checkbox
+                      id="isSecretaryCheckbox"
+                      ripple={false}
+                      className="hover:before:opacity-0"
+                      containerProps={{
+                        className: "p-0",
+                      }}
+                      checked={request.isSecretary}
+                      onChange={handleCheckboxChange}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                      crossOrigin={undefined} // other props as needed
+                    />
+                    <Typography
+                      color="blue-gray"
+                      className="font-medium"
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                    >
+                      Is Secretary
+                    </Typography>
+                  </div>
+                )}
               </CardBody>
               <CardFooter
                 className="pt-0"

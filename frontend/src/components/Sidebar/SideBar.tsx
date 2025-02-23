@@ -1,4 +1,5 @@
 "use client";
+
 import { usePathname, useRouter } from "next/navigation";
 import {
   Card,
@@ -11,6 +12,7 @@ import {
   PresentationChartBarIcon,
   IdentificationIcon,
   BuildingOfficeIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/solid";
 import { useGlobalContext } from "@/contexts/GlobalProvider";
 
@@ -27,7 +29,7 @@ const menuItems = [
     title: "Employee",
     path: "/employee",
     icon: IdentificationIcon,
-    role: ["ADMIN","SECRETARY"],
+    role: ["ADMIN", "SECRETARY"],
   },
   {
     title: "Departement",
@@ -35,25 +37,34 @@ const menuItems = [
     icon: BuildingOfficeIcon,
     role: ["ADMIN"],
   },
-
+  {
+    title: "Profile",
+    path: "/profile",
+    icon: UserCircleIcon,
+    role: ["ADMIN", "SECRETARY", "EMPLOYEE"],
+  },
 ];
 
 export const SideBar: React.FC<SideBarProps> = () => {
   const pathname = usePathname() || "";
   const router = useRouter();
 
-  // Import the role from the global context
-  const {getRoleFromLocalStorage} = useGlobalContext();
-
+  // Get the role from the global context
+  const { getRoleFromLocalStorage } = useGlobalContext();
   const role = getRoleFromLocalStorage();
 
+  // Filter menu items based on the user's role
+  const filteredMenuItems = menuItems.filter((item) =>
+    // @ts-ignore
+    item.role.includes(role)
+  );
 
   return (
     <Card
       className="fixed h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl bg-white"
-      placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
+      placeholder={undefined}
     >
       <div className="mb-2 p-4">
         <Typography
@@ -71,7 +82,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
       >
-        {menuItems.map((item) => (
+        {filteredMenuItems.map((item) => (
           <ListItem
             key={item.title}
             className={`hover:bg-blue-gray-50 cursor-pointer ${

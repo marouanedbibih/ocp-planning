@@ -1,0 +1,29 @@
+server:
+  port: 8082
+
+spring:
+  config:
+    activate:
+      on-profile:
+      - docker
+  application:
+    name: ocp-planning-backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${SPRING_DATASOURCE_HOST}:${SPRING_DATASOURCE_PORT}/${SPRING_DATASOURCE_DB}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS}
+  
+logging:
+  level:
+    org.springframework: DEBUG
+    hibernate: DEBUG
+    security: DEBUG

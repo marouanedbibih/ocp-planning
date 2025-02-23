@@ -54,6 +54,12 @@ interface GlobalContextProps {
   getRoleFromLocalStorage: () => string | null;
   removeRoleFromLocalStorage: () => void;
 
+  // Departement ID state
+  departementID: number | null;
+  setDepartementIDInLocalStorage: (id: number) => void;
+  getDepartementIDFromLocalStorage: () => number | null;
+  removeDepartementIDFromLocalStorage: () => void;
+
   // Department dropdown state
   departements: IDepartement[];
   setDepartements: (departments: IDepartement[]) => void;
@@ -175,6 +181,26 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Department dropdown state
   const [departements, setDepartements] = useState<IDepartement[]>([]);
 
+  // Departement ID state
+  const [departementID, setDepartementID] = useState<number | null>(null);
+
+  // Function to set the departement ID and save it to localStorage
+  const setDepartementIDInLocalStorage = (id: number) => {
+    setDepartementID(id);
+    localStorage.setItem("departementID", id.toString());
+  };
+
+  // Function to get the departement ID from localStorage
+  const getDepartementIDFromLocalStorage = () => {
+    return parseInt(localStorage.getItem("departementID") ?? "");
+  };
+
+  // Function to remove the departement ID from localStorage
+  const removeDepartementIDFromLocalStorage = () => {
+    setDepartementID(null);
+    localStorage.removeItem("departementID");
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -216,6 +242,11 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         // Department dropdown state
         departements,
         setDepartements,
+        // Departement ID state
+        departementID,
+        setDepartementIDInLocalStorage,
+        getDepartementIDFromLocalStorage,
+        removeDepartementIDFromLocalStorage,
       }}
     >
       {children}
