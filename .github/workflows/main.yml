@@ -34,6 +34,7 @@ jobs:
 
       # Step 4: Run unit tests
       - name: Run Unit Tests
+        working-directory: ./backend 
         run: mvn test
 
       # Step 5: Log in to Docker Hub (using secrets for authentication)
