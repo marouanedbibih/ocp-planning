@@ -44,7 +44,7 @@ jobs:
       # Step 6: Build the Docker image for the Backend
       - name: Build Docker image (Backend)
         working-directory: ./docker
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ocp-planning-backend:${{ secrets.DOCKER_TAG }} -f Dockerfile.backend .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ocp-planning-backend:${{ secrets.DOCKER_TAG }} -f Dockerfile.backend ..
 
       # Step 7: Push Backend Docker image to Docker Hub
       - name: Push Backend Docker image
@@ -75,7 +75,7 @@ jobs:
       # Step 4: Build the Docker image for Frontend
       - name: Build Docker image (Frontend)
         working-directory: ./docker
-        run: docker build --build-arg NEXT_PUBLIC_API_URL=${{ secrets.BACKEND_TEST_API }} -t ${{ secrets.DOCKER_USERNAME }}/ocp-planning-frontend:${{ secrets.DOCKER_TAG }} -f Dockerfile.frontend .
+        run: docker build --build-arg NEXT_PUBLIC_API_URL=${{ secrets.BACKEND_TEST_API }} -t ${{ secrets.DOCKER_USERNAME }}/ocp-planning-frontend:${{ secrets.DOCKER_TAG }} -f Dockerfile.frontend ..
 
       # Step 5: Push Frontend Docker image to Docker Hub
       - name: Push Frontend Docker image
